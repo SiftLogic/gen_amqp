@@ -276,11 +276,12 @@ update_counter(Key, Count) ->
                 true -> ok;
                 false -> ets:update_counter(gen_amqp_counters, Key, Count)
             catch error:badarg ->
-                    catch ets:new(gen_amqp_counters,
-                                  [set,
-                                   public,
-                                   named_table,
-                                   {heir, whereis(smlib_sup), none}]),
+                    catch ets:new(
+                            gen_amqp_counters,
+                            [set,
+                             public,
+                             named_table,
+                             {heir, whereis(application_controller), none}]),
                     update_counter(Key, Count)
             end
     end.
