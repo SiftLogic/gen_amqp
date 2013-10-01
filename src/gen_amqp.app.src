@@ -1,0 +1,15 @@
+%% -*- Erlang -*-
+{application, gen_amqp,
+ [
+  {description, "RabbitMQ wrapper library"},
+  {vsn, git},
+  {modules,
+   [
+    gen_amqp
+   ]},
+  {applications,
+   [
+    amqp_client,
+    rabbit_common
+   ]},
+  {env, []}]}.
