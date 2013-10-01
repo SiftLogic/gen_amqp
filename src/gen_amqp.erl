@@ -18,6 +18,9 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
          terminate/2, code_change/3]).
 
+%% Debug support
+-export([connection_counters/0]).
+
 -record(gen_amqp_conn,
         {connection,
          main_channel,
@@ -256,6 +259,9 @@ count_connect() ->
 
 count_disconnect() ->
     connection_counters(-1).
+
+connection_counters() ->
+    ets:tab2list(gen_amqp_counters).
 
 connection_counters(Count) ->
     catch throw(get_stacktrace),
