@@ -380,8 +380,8 @@ get(#gen_amqp_conn{connection = Connection} = AmqpConn, Q)
     end.
 
 close_minor_channels(#gen_amqp_conn{minor_channels = MinorChannels}) ->
-    lists:map(fun({Channel, _}) -> catch amqp_channel:close(Channel) end,
-              MinorChannels),
+    _ = lists:map(fun({Channel, _}) -> catch amqp_channel:close(Channel) end,
+                  MinorChannels),
     ok.
 
 ack(#gen_amqp_conn{}, #tag{channel = Channel, tag = Tag}) ->
