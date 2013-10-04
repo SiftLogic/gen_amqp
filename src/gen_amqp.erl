@@ -270,11 +270,11 @@ connection_counters(Count) ->
     update_counter(Mod, Count).
 
 update_counter(Key, Count) ->
-    try ets:update_counter(gen_amqp_counters, Key, Count)
+    try ets:update_counter(gen_amqp_counters, Key, Count), ok
     catch error:badarg ->
             try ets:insert_new(gen_amqp_counters, {Key, Count}) of
                 true -> ok;
-                false -> ets:update_counter(gen_amqp_counters, Key, Count)
+                false -> ets:update_counter(gen_amqp_counters, Key, Count), ok
             catch error:badarg ->
                     catch ets:new(
                             gen_amqp_counters,
